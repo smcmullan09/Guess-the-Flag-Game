@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1012">
+  <meta name="description" content="195 flags. One world. Test your geography, learn every flag, and race your personal best in SMM Flag Quiz.">
+  <title>SMM Flag Quiz</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="countries.js" defer></script>
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header shell">
+    <a class="brand" href="./index.html" aria-label="SMM Flag Quiz home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 21V4m0 0c5-5 9 5 14 0v10c-5 5-9-5-14 0"/></svg></span>
+      <span>SMM <span class="brand-light">Flag Quiz</span><span class="brand-dot">.</span></span>
+    </a>
+    <button class="text-button how-button" id="how-button"><span class="help-icon">?</span> How to play</button>
+  </header>
+
+  <main class="shell">
+    <section id="setup-screen" class="screen">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> A WORLD OF FLAGS. A RACE AGAINST TIME.</p>
+          <h1>SMM Flag Quiz<span class="accent">.</span></h1>
+          <p class="hero-description">Know the flag. Name the country.<br>How fast can you conquer the world?</p>
+          <div class="hero-facts"><span><strong>195</strong> countries</span><i></i><span><strong>7</strong> ways to play</span><i></i><span>One personal best</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg class="globe-art" viewBox="0 0 400 330"><defs><radialGradient id="globe-light"><stop stop-color="#74deb5" stop-opacity=".08"/><stop offset="1" stop-color="#74deb5" stop-opacity="0"/></radialGradient></defs><circle cx="210" cy="164" r="145" fill="url(#globe-light)"/><g fill="none" stroke="currentColor" stroke-width=".7"><circle cx="210" cy="164" r="117"/><ellipse cx="210" cy="164" rx="63" ry="117"/><ellipse cx="210" cy="164" rx="103" ry="117"/><ellipse cx="210" cy="164" rx="117" ry="42"/><ellipse cx="210" cy="164" rx="117" ry="83"/><path d="M93 164h234M210 47v234"/><ellipse cx="210" cy="164" rx="173" ry="67" transform="rotate(-30 210 164)" stroke-dasharray="3 6"/></g><g fill="#8ae5bd"><circle cx="110" cy="87" r="3"/><circle cx="324" cy="205" r="3"/></g></svg>
+          <div class="floating-flag flag-one"><img src="assets/flags/jp.svg" alt=""></div>
+          <div class="floating-flag flag-two"><img src="assets/flags/br.svg" alt=""></div>
+          <div class="floating-flag flag-three"><img src="assets/flags/gb.svg" alt=""></div>
+          <span class="art-coordinate">51° 30′ N &nbsp; 0° 07′ W</span>
+        </div>
+      </div>
+      <div class="section-heading"><div><p class="eyebrow muted">YOUR NEXT CHALLENGE</p><h2>Choose a region</h2></div><span class="section-note">Pick your territory. Set your time.</span></div>
+      <div id="region-grid" class="region-grid"></div>
+      <p id="loading-status" class="loading-status" role="status"></p>
+      <div class="quick-guide"><span><span class="guide-symbol">↳</span> Type to answer</span><span><span class="guide-symbol">✓</span> Correct answers advance instantly</span><span><span class="guide-symbol">↻</span> Missed flags come back</span></div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" hidden aria-label="Flag quiz">
+      <div class="game-topline"><span class="region-pill"><span class="live-dot"></span><span id="game-region">World</span> challenge</span><span class="personal-best" id="game-best"></span></div>
+      <div class="scoreboard"><div><span class="metric-label">STOPWATCH</span><span class="timer" id="timer" aria-label="Elapsed time">00:00</span></div><div class="progress-metric"><span class="metric-label">PROGRESS</span><span class="progress-number"><strong id="correct-count">0</strong><span>/</span><span id="total-count">195</span></span></div></div>
+      <div id="progress-track" class="progress-track" role="progressbar" aria-label="Correctly identified flags" aria-valuemin="0" aria-valuemax="195" aria-valuenow="0"><div id="progress-fill"></div></div>
+      <div class="flag-panel" id="flag-panel"><span class="panel-label">NAME THIS COUNTRY</span><div class="flag-stage"><img id="quiz-flag" alt="Flag to identify" draggable="false"></div><span class="flag-caption">One flag closer to the finish.</span></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite" aria-atomic="true">You know this one. Start typing.</div>
+      <form id="answer-form" autocomplete="off"><label class="sr-only" for="answer">Country name</label><div class="answer-wrap"><span class="input-symbol" aria-hidden="true">›</span><input id="answer" name="country-answer" placeholder="Type the country..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-describedby="answer-help"><span class="input-enter" aria-hidden="true">↵</span></div><button type="button" id="skip-button" class="skip-button">Skip <span aria-hidden="true">→</span></button></form>
+      <p class="answer-help" id="answer-help">Correct answers advance automatically. <kbd>Enter</kbd> to submit or skip.</p>
+      <div class="game-bottom"><span id="remaining-count">195 flags to go</span><span>Stay curious. Keep going.</span></div>
+    </section>
+
+    <section id="complete-screen" class="screen complete-screen" hidden aria-labelledby="complete-title">
+      <div class="completion-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 7h18v12c0 13-18 13-18 0V7Zm0 4H7v5c0 6 4 9 10 9m16-14h8v5c0 6-4 9-10 9M24 29v10m-8 2h16"/></svg></div>
+      <p class="eyebrow accent">QUIZ COMPLETE</p><h1 id="complete-title">World, conquered<span class="accent">.</span></h1><p class="completion-copy">Every flag identified. Every challenge answered.</p>
+      <div class="result-card"><div class="result-top"><span id="complete-region">World challenge</span><span class="result-badge" id="record-badge">ALL FLAGS CLEARED</span></div><span class="metric-label">FINAL TIME</span><div class="final-time" id="final-time">00:00</div><p class="result-flags" id="result-flags">195 / 195 Flags</p><div class="result-stats"><div><strong id="stat-correct">195</strong><span>Correct flags</span></div><div><strong id="stat-incorrect">0</strong><span>Incorrect attempts</span></div><div><strong id="stat-skips">0</strong><span>Skips</span></div></div></div>
+      <div class="completion-actions"><button class="primary-button" id="play-again">Play Again <span aria-hidden="true">↻</span></button><button class="secondary-button" id="change-region">Change Region <span aria-hidden="true">→</span></button></div>
+      <p class="completion-footnote">A whole world to learn. A new time to beat.</p>
+    </section>
+  </main>
+  <footer class="site-footer shell"><span><span class="footer-dot"></span> Made for curious minds.</span><span>195 sovereign states <span class="footer-divider">/</span> No borders to your knowledge.</span></footer>
+  <dialog id="how-dialog" aria-labelledby="how-title"><div class="dialog-header"><p class="eyebrow accent">THE FIELD GUIDE</p><button class="close-button" id="close-dialog" aria-label="Close instructions">×</button></div><h2 id="how-title">A flag. A name. Go.</h2><ol class="instructions"><li><strong>Choose your challenge.</strong><span>Select the world or one of six continents. The stopwatch starts with the first flag.</span></li><li><strong>Type the country.</strong><span>Correct names advance instantly. Capitalisation, common aliases, and omitted accents are fine. Spelling matters.</span></li><li><strong>Learn it. Try it again.</strong><span>Press Enter to submit a wrong guess, or use Skip (Enter on an empty field). The answer appears for 1.4 seconds, then the flag returns later.</span></li><li><strong>Finish every flag.</strong><span>Only correct answers count. The clock keeps running until you have identified every country.</span></li></ol><p class="region-policy">195 states: the 193 UN members, Palestine and Vatican City. UN geographic groupings place Russia in Europe; Türkiye, Cyprus, Armenia, Azerbaijan, Georgia and Kazakhstan in Asia. North America includes Central America and the Caribbean.</p><button id="got-it" class="primary-button">Got it. Let’s play <span aria-hidden="true">→</span></button></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to play SMM Flag Quiz.</p></noscript>
+</body>
+</html>
